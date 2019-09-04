@@ -1,10 +1,15 @@
-from room import Room
+from .player import Player
+from .room import Room
 
 # Declare all the rooms
 
 room = {
     'outside':  Room("Outside Cave Entrance",
-                     "North of you, the cave mount beckons"),
+                     "North of you, the cave mount beckons",
+                     room[foyer],
+                     error,
+                     error,
+                     error),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
 passages run north and east."""),
@@ -49,3 +54,16 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+players = [
+    Player("Player 0", room['outside']),
+]
+
+player_one = Player("Player 1", room["outside"])
+print(player_one)
+
+player_room = room["outside"]
+print(player_room)
+
+make_move = input("Enter a direction: ")
+
