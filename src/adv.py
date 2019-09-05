@@ -1,5 +1,8 @@
 from player import Player
 from room import Room
+from items import Item
+
+import sys
 
 # Declare all the rooms
 
@@ -22,6 +25,11 @@ chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south."""),
 }
 
+items = {
+    'sword' : Item("Onion Sword", "A smelly sword"),
+    'staff' : Item("Fire Staff", "A long stick that shoots out fire"),
+    'shield': Item("Turtle Shield", "A warrior's shield from ancient times"),
+}
 
 # Link rooms together
 
@@ -34,6 +42,9 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
+room['foyer'].add_item( items['sword'] )
+room['overlook'].add_item( items['shield'] )
+room['treasure'].add_item( items['sword'] )
 #
 # Main
 #
@@ -57,32 +68,35 @@ print(player_one)
 
 running = True
 
-def handleInput( user_input ):
-    lower_input = user_input.lower()
-    
-try: 
-    if lower_input == "n" and hasattr( player_one.current_room, 'n_to' ) :
-        player_one.current_room = player_one.current_room.n_to
-    # elif lower_input == "s" and hasattr( player_one.current_room, 's_to' ) :
-    #     player_one.current_room = player_one.current_room.s_to
-    # elif lower_input == "e" and hasattr( player_one.current_room, 'e_to' ) :
-    #     player_one.current_room = player_one.current_room.e_to
-    # elif lower_input == "w" and hasattr( player_one.current_room, 'w_to') :
-    #     player_one.current_room = player_one.current_room.w_to
-    # elif lower_input == "q" : 
-    #     break
-# else: 
-#     print("Enter `n`, `s`, `e, `w` to travel in a direction.  Enter `q` to exit game")
-
-
-
-    #when lower_input == 'q' -> run the quit function, running = false
-    #check entry
-    #check room exists
-
 while running:
-    print( f" My Current Room: {player_one.current_room}" )
+    print( f"My Current Room: {player_one.current_room}" )
     make_move = input("Enter a direction: ")
-    handleInput( make_move )
+    print(running)
+    print( player_one.current_room.display_items() )
+
+
+    lower_input = make_move.lower()
+
+    if lower_input == "q" : 
+        print('q was pressed')
+        running = False
+        break
+
+    elif lower_input == "n" and hasattr( player_one.current_room, 'n_to' ) :
+        player_one.current_room = player_one.current_room.n_to
+
+    elif lower_input == "s" and hasattr( player_one.current_room, 's_to' ) :
+        player_one.current_room = player_one.current_room.s_to
+
+    elif lower_input == "e" and hasattr( player_one.current_room, 'e_to' ) :
+        player_one.current_room = player_one.current_room.e_to
+
+    elif lower_input == "w" and hasattr( player_one.current_room, 'w_to') :
+        player_one.current_room = player_one.current_room.w_to
+
+    else:
+        print("Please enter `n`, `s`, `e`, `w` to travel. `q` to exit game.")
+
+
 
 
