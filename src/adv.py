@@ -1,15 +1,11 @@
-from .player import Player
-from .room import Room
+from player import Player
+from room import Room
 
 # Declare all the rooms
 
 room = {
     'outside':  Room("Outside Cave Entrance",
-                     "North of you, the cave mount beckons",
-                     room[foyer],
-                     error,
-                     error,
-                     error),
+                     "North of you, the cave mount beckons"),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
 passages run north and east."""),
@@ -55,15 +51,38 @@ room['treasure'].s_to = room['narrow']
 #
 # If the user enters "q", quit the game.
 
-players = [
-    Player("Player 0", room['outside']),
-]
 
 player_one = Player("Player 1", room["outside"])
 print(player_one)
 
-player_room = room["outside"]
-print(player_room)
+running = True
 
-make_move = input("Enter a direction: ")
+def handleInput( user_input ):
+    lower_input = user_input.lower()
+    
+try: 
+    if lower_input == "n" and hasattr( player_one.current_room, 'n_to' ) :
+        player_one.current_room = player_one.current_room.n_to
+    # elif lower_input == "s" and hasattr( player_one.current_room, 's_to' ) :
+    #     player_one.current_room = player_one.current_room.s_to
+    # elif lower_input == "e" and hasattr( player_one.current_room, 'e_to' ) :
+    #     player_one.current_room = player_one.current_room.e_to
+    # elif lower_input == "w" and hasattr( player_one.current_room, 'w_to') :
+    #     player_one.current_room = player_one.current_room.w_to
+    # elif lower_input == "q" : 
+    #     break
+# else: 
+#     print("Enter `n`, `s`, `e, `w` to travel in a direction.  Enter `q` to exit game")
+
+
+
+    #when lower_input == 'q' -> run the quit function, running = false
+    #check entry
+    #check room exists
+
+while running:
+    print( f" My Current Room: {player_one.current_room}" )
+    make_move = input("Enter a direction: ")
+    handleInput( make_move )
+
 
